@@ -1,5 +1,6 @@
 import Headers from "./Headers";
 import "./Home.css";
+import Footer from "./footer/Footer";
 
 const Home = () => {
   return (
@@ -34,6 +35,7 @@ const Home = () => {
           className="exclusiveCol-img"
         />
       </div>
+      <Footer></Footer>
     </div>
   );
 };
