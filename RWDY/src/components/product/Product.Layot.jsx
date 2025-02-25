@@ -1,80 +1,83 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { useDispatch } from "react-redux";
-//import { addToCart } from "../cart/Cart.Slice";
 import "./product.css";
 import Headers from "../Headers";
+import Footer from "../footer/Footer";
 
 const ProductList = () => {
   const [productLis, setProductList] = useState([]);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((data) => data.json())
       .then((data) => {
         if (data.length > 0) {
-          data[0].image = "/img1.jpg";
-          data[1].image = "/img2.jpg";
-          data[2].image = "/img3.jpg";
-          data[3].image = "/img4.jpg";
-          data[4].image = "/img5.jpg";
-          data[5].image = "/img6.jpg";
-          data[6].image = "/img7.jpg";
-          data[7].image = "/img8.jpg";
-          data[8].image = "/img9.jpg";
-          data[9].image = "/img10.jpg";
-          data[10].image = "/img1.jpg";
-          data[11].image = "/img2.jpg";
-          data[12].image = "/img3.jpg";
-          data[13].image = "/img4.jpg";
-          data[14].image = "/img5.jpg";
-          data[15].image = "/img6.jpg";
-          data[16].image = "/img7.jpg";
-          data[17].image = "/img8.jpg";
-          data[18].image = "/img9.jpg";
-          data[19].image = "/img10.jpg";
+          data.forEach((item, index) => {
+            item.image = `/img${(index % 10) + 1}.jpg`;
+          });
         }
         setProductList(data);
+        setFilteredProducts(data);
       });
   }, []);
-
-  // const onAddCart = (product) => {
-  //   console.log({ product });
-  //   dispatch(addToCart(product));
-  // };
 
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`);
   };
 
+  const onInputSearch = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+
+    setTimeout(() => {
+      const filteredProducts = productLis.filter((elem) =>
+        elem.title.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredProducts(filteredProducts);
+    }, 300);
+  };
+
+  if (productLis.length === 0) {
+    return <div className="loading">Loading...</div>;
+  }
+
   return (
     <div>
-      <Headers></Headers>
+      <Headers />
+      <div className="search-container">
+        <input
+          type="text"
+          value={searchValue}
+          onInput={onInputSearch}
+          placeholder="Search products..."
+          className="search-input"
+        />
+      </div>
 
       <div className="product-list">
-        {productLis.map((item) => {
-          return (
-            <div
-              className="item"
-              key={item.id}
-              onClick={() => handleProductClick(item.id)}
-            >
-              <img src={item.image} className="item-image" alt={item.title} />
-              <div>
-                <p>{item.title}</p>
-                {/* <button
-                  onClick={() => {
-                    onAddCart(item);
-                  }}
-                >
-                  Add to cart
-                </button> */}
+        {filteredProducts.length === 0 ? (
+          <div className="no-results">No products found</div>
+        ) : (
+          filteredProducts.map((item) => {
+            return (
+              <div
+                className="item"
+                key={item.id}
+                onClick={() => handleProductClick(item.id)}
+              >
+                <img src={item.image} className="item-image" alt={item.title} />
+                <div>
+                  <p>{item.title}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
+      <Footer />
     </div>
   );
 };

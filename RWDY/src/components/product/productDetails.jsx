@@ -4,6 +4,7 @@ import "./productDetails.css";
 import Headers from "../Headers";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../cart/Cart.Slice";
+import Footer from "../footer/Footer";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -62,6 +63,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
