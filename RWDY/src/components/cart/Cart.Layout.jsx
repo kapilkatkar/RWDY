@@ -5,6 +5,8 @@ import {
   decreamentProducts,
 } from "./Cart.Slice";
 import { useDispatch } from "react-redux";
+import "./MyCart.css";
+import Headers from "../Headers";
 
 const MyCart = () => {
   const cartList = useSelector((state) => state.myCart.data);
@@ -16,11 +18,10 @@ const MyCart = () => {
 
   const onIncreament = (id) => {
     dispatch(increamentProducts({ id }));
-    itemTotalPrice;
   };
+
   const onDecreament = (id) => {
     dispatch(decreamentProducts({ id }));
-    itemTotalPrice;
   };
 
   const totalPrice = (args) => {
@@ -39,43 +40,45 @@ const MyCart = () => {
 
   return (
     <div>
-      <div>My cart</div>
-      {cartList.length > 0 ? (
-        cartList.map((item) => {
-          return (
-            <div
-              key={item.id}
-              style={{
-                display: "flex",
-                gap: "4px",
-              }}
-            >
-              <img src={item.image} key={item.id} alt="" width={20} />
-              <span key={item.id} style={{ fontSize: "12px" }}>
-                {item.title}
-              </span>
-              <span>Quantity : {item.quantity}</span>
+      <Headers></Headers>
+      <div className="cart-container">
+        <div className="cart-header">My cart</div>
+        {cartList.length > 0 ? (
+          cartList.map((item) => {
+            return (
+              <div key={item.id} className="cart-item">
+                <img src={item.image} alt={item.title} />
+                <span className="cart-item-title">{item.title}</span>
+                <span className="cart-item-quantity">
+                  Quantity: {item.quantity}
+                </span>
 
-              {item.quantity < 10 ? (
-                <button onClick={() => onIncreament(item.id)}>+</button>
-              ) : (
-                <button disabled={true} onClick={() => onIncreament(item.id)}>
-                  +
-                </button>
-              )}
-
-              <button onClick={() => onDecreament(item.id)}>-</button>
-              <button onClick={() => onRemoveFromCart(item.id)}>Remove</button>
-              <div key={item.id}>
-                {Number(item.price) * Number(item.quantity)}
+                <div className="cart-item-buttons">
+                  {item.quantity < 10 ? (
+                    <button onClick={() => onIncreament(item.id)}>+</button>
+                  ) : (
+                    <button disabled>+</button>
+                  )}
+                  <button onClick={() => onDecreament(item.id)}>-</button>
+                  <button
+                    onClick={() => onRemoveFromCart(item.id)}
+                    style={{ background: "Red" }}
+                  >
+                    Remove
+                  </button>
+                </div>
+                <div className="cart-item-price">
+                  {Number(item.price) * Number(item.quantity)}
+                </div>
               </div>
-            </div>
-          );
-        })
-      ) : (
-        <p>No products available</p>
-      )}
-      <div>Total Price:{cartTotalPrice}</div>
+            );
+          })
+        ) : (
+          <p>No products available</p>
+        )}
+        <div className="total-price">Total Price: {cartTotalPrice}</div>
+        <button>By Now</button>
+      </div>
     </div>
   );
 };

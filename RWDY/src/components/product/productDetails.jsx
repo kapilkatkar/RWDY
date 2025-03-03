@@ -28,6 +28,9 @@ const ProductDetail = () => {
     dispatch(addToCart(product));
   };
 
+  const handleAddToCart1 = () => {
+    console.log("BUY NOW");
+  };
   return (
     <div>
       <Headers></Headers>
@@ -57,7 +60,7 @@ const ProductDetail = () => {
             <button className="add-to-cart-button" onClick={handleAddToCart}>
               Add to Cart
             </button>
-            <button className="buy-now-button" onClick={handleAddToCart}>
+            <button className="buy-now-button" onClick={handleAddToCart1}>
               Buy Now
             </button>
           </div>

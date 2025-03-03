@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./Header.css";
 
 const Headers = () => {
+  const totalItems = useSelector((state) => state.myCart.totalItems);
+
   return (
     <nav className="navbar">
       <ul className="nav-links">
@@ -27,7 +30,9 @@ const Headers = () => {
           <Link to={"/login"}>LOGIN</Link>
         </li>
         <li>
-          <Link to={"/cart"}>CART</Link>
+          <Link to={"/cart"}>
+            CART <sup style={{ color: "red" }}>{totalItems}</sup>
+          </Link>
         </li>
         <li>
           <Link to={"/"}>LOGO</Link>
