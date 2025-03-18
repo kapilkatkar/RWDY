@@ -30,10 +30,13 @@ const Headers = () => {
           <Link to={"/login"}>LOGIN</Link>
         </li>
         <li>
-          <Link to={"/cart"}>
-            CART <sup style={{ color: "red" }}>{totalItems}</sup>
-          </Link>
+          {totalItems > 0 && (
+            <Link to={"/cart"}>
+              CART <sup style={{ color: "red" }}>{totalItems}</sup>
+            </Link>
+          )}
         </li>
+
         <li>
           <Link to={"/"}>LOGO</Link>
         </li>
