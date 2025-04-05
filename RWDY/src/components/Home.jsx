@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div id="home-container">
-      <header className="main-header">
-        <h1 className="site-title">ROWDY FASHION</h1>
-      </header>
       <Headers />
       <section className="products">
         <Link to={"/winter-essential"} className="product">
@@ -28,15 +25,15 @@ const Home = () => {
         </Link>
       </section>
 
-      <div>
-        <Link to={"/winter-essential"}>
-          <img
-            src="/exclusiveCol.jpg"
-            alt="okkkkk"
-            className="exclusiveCol-img"
-          />
+      <section className="exclusive-collection">
+        <Link to="/winter-essential" className="exclusive-link">
+          <div className="exclusive-overlay">
+            <h2>Exclusive Winter Collection</h2>
+            <p>Limited drops, limitless style.</p>
+          </div>
+          <img src="/exclusiveCol.jpg" alt="Exclusive Collection" />
         </Link>
-      </div>
+      </section>
       <Footer></Footer>
     </div>
   );
